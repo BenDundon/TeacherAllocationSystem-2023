@@ -2,85 +2,91 @@
   <div class="table-outter">
     <div class="table-title-block">
       <div class="hcell tcell margin-8">
-          @!component('components.expandAll')
+        @!component('components.expandAll')
       </div>
       <div class="hcell tcell margin-8">Name</div>
       <div class="hcell tcell margin-8">Academic ID</div>
       <div class="hcell tcell margin-8">Category</div>
       <div class="hcell tcell margin-8">Teaching Fraction (%)</div>
       <div class="hcell tcell margin-8">Actions</div>
-
     </div>
   </div>
 </div>
-  {{--Display Academic, name; school; load; status; tags; actions--}}
-  {{--  Iterates through all of the allocations, displaying them in different colours depending on the requested and assigned load  --}}
-  @each(academic in academics)
+{{--Display Academic, name; school; load; status; tags; actions--}}
+{{--  Iterates through all of the allocations, displaying them in different colours depending on the requested and assigned load  --}}
+@each(academic in academics)
   {{--  Display Mode (not a form)  --}}
   <div>
-  <div class="table-outter">
-   <div class="table-static">
+    <div class="table-outter">
+      <div class="table-static">
       <div class="tcell text-align-center margin-8"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
       <div class="tcell margin-8">{{ academic.name }}</div>
       <div class="tcell margin-8">{{ academic.id }}</div>
       <div class="tcell margin-8">{{ academic.category }}</div>
       <div class="tcell margin-8">{{academic.teachingFraction}}</div>
-
       <div class="tcell margin-8">
-        @!component('components.editAcademic', csrf=csrf, academic=academic)
-        @!component('components.addPreference', csrf=csrf, academic=academic, preference = preference, units = units)
+        @!component('components.editAcademic', {
+          csrf: csrf,
+          academic: academic,
+        })
+        @!component('components.addPreference', {
+          csrf: csrf,
+          route2: route2,
+          academic: academic,
+          preference: preference,
+          units: units,
+        })
       </div>
-   </div>
-
-  @if(academics[0])
-  <div class="table-collapse">
-    <table style="width:100%; border-collapse:collapse;">
-      <tr>
-        <th class="margin-8 table-cell">Unit Preference</th>
-        <th class="margin-8 table-cell">Desire To Teach (/10)</th>
-        <th class="margin-8 table-cell">Ability To Teach (/10)</th>
-        <th class="margin-8 table-cell">Actions</th>
-      </tr>
-      @each(preference in groupedPreferences[academic.id])
-      <tr class="table-row">
-        <td class="margin-8 table-cell">{{ preference.code }}</td>
-        <td class="margin-8 table-cell">{{ preference.desireToTeach }}</td>
-        <td class="margin-8 table-cell">{{ preference.abilityToTeach }}</td>
-        <td class="margin-8 table-cell">
-          <div  style="display:inline;">
-            @!component('components.editPreference', csrf=csrf,academic=academic, preference = preference, units = units)
-
-          </div>
-          <form action="academics/deletepreference" method="POST" style="display:inline;">
-            {{csrf}}
-            <input type="hidden" name="id" value="{{preference.id}}"></input>
-            <input type="hidden" name="code" value="{{preference.code}}"></input>
-            <input type="submit"   value = "Delete" class="dd-button--hyperlink margin-0"></input>
-          </form>
-        </td>
-      </tr>
-      @endeach
-    </table>
+    </div>
+    @if(academics[0])
+      <div class="table-collapse">
+        <table style="width:100%; border-collapse:collapse;">
+          <tr>
+            <th class="margin-8 table-cell">Preferred Unit</th>
+            <th class="margin-8 table-cell">Preferred Semester</th>
+            <th class="margin-8 table-cell">Desire To Teach (/10)</th>
+            <th class="margin-8 table-cell">Ability To Teach (/10)</th>
+            <th class="margin-8 table-cell">Years Of Prior Work</th>
+            <th class="margin-8 table-cell">Actions</th>
+          </tr>
+          @each(preference in groupedPreferences[academic.id])
+            <tr class="table-row">
+              <td class="margin-8 table-cell">{{ preference.code }}</td>
+              <td class="margin-8 table-cell">{{ preference.preferredSemester }}</td>
+              <td class="margin-8 table-cell">{{ preference.desireToTeach }}</td>
+              <td class="margin-8 table-cell">{{ preference.abilityToTeach }}</td>
+              <td class="margin-8 table-cell">{{ preference.yearsOfPriorWork }}</td>
+              <td class="margin-8 table-cell">
+                <div  style="display:inline;">
+                  @!component('components.editPreference', {
+                    csrf: csrf,
+                    route3: route3,
+                    academic: academic,
+                    preference: preference,
+                    units: units,
+                  })
+                </div>
+                <form method="POST" action="{{route4}}" style="display:inline;">
+                  {{csrf}}
+                  <input type="hidden" name="id" value="{{preference.id}}"></input>
+                  <input type="hidden" name="code" value="{{preference.code}}"></input>
+                  <input type="hidden" name="preferredSemester" value="{{preference.preferredSemester}}"></input>
+                  <input type="submit" value="Delete" class="dd-button--hyperlink margin-0"></input>
+                </form>
+              </td>
+            </tr>
+          @endeach
+        </table>
+      </div>
+    @endif
   </div>
-  @endif
-
-
-
-  </div>
-
-</div>
   {{--  if theres no allocations, display a warning  --}}
   @else
     <section class="hero is-danger">
       <div class="hero-body">
-        <p class="title">
-          No Results
-        </p>
-        <p class="subtitle">
-           Please add an allocation or import spreadsheet
-        </p>
+        <p class="title">No Results</p>
+        <p class="subtitle">Please add an allocation or import spreadsheet</p>
       </div>
     </section>
 @endeach
-
 @!component('components.tableJS')

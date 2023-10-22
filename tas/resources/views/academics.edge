@@ -1,58 +1,36 @@
 <!DOCTYPE html>
 <html>
   @!component('components.head', title="Teacher Allocation System")
-
   <body>
-  <div class="wrapper">
-    @include('partials/sidebar')
-    <div class="content-section">
-      <div class="main-content">
-
-      @!component('components.addacademic', csrf=csrfField())
-
-
-      @!component('components.searchAcademics', title="Find academic (name | ID)...", academics=academics, units=units, csrf=csrfField(), route=route('AcademicController.render'))
-
-      <div>
-        {{-- Display Academics --}}
-        @!component('components.displayAcademics', csrf=csrfField(), route=route('AcademicController.render'), academics=academics, groupedPreferences=groupedPreferences, units = units)
-      </div>
-
-      </div>
-    </div>
-  </div>
-</body>
-
-
-
-  {{--
-  <body>
-  <section class="section">
-    <div class="container">
-      <div class="section is-small">
-        <div class="level">
-          <div class="container">
-            <h1 class="title">Academics</h1>
-            <h2 class="subtitle">Add and Search for Academics</h2>
-          </div>
-          <div class="level is-right">
-            @!component('components.addacademic', csrf=csrfField())
+    <div class="wrapper">
+      @include('partials/sidebar')
+      <div class="content-section">
+        <div class="main-content">
+          @!component('components.addacademic', {
+            csrf: csrfField(),
+          })
+          @!component('components.searchAcademics', {
+            title: "Find academic (name | ID)...",
+            academics: academics,
+            units: units,
+            csrf: csrfField(),
+            route: route('AcademicController.render'),
+          })
+          <div>
+            {{-- Display Academics --}}
+            @!component('components.displayAcademics', {
+              csrf: csrfField(), 
+              route1: route('AcademicController.render'),
+              route2: route('AcademicController.addPreference'),
+              route3: route('AcademicController.updatePreference'),
+              route4: route('AcademicController.deletePreference'),
+              academics: academics,
+              groupedPreferences: groupedPreferences,
+              units: units,
+            })
           </div>
         </div>
       </div>
-      <div class="section">
-        @!component('components.searchbar', title="Find Academic", csrf=csrfField(), route=route('AcademicController.render'))
-      </div>
-
-      @!component('components.displayAcademics', csrf=csrfField(), route=route('AcademicController.render'), academics=academics)
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-    </section>
-
+    </div>
   </body>
-      --}}
 </html>

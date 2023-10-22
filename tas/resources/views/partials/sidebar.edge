@@ -1,39 +1,37 @@
-<div class="nav-opener" onclick="toggleSidebar()"><i class="navopenicon fa fa-times" aria-hidden="true"></i></div>
+<div class="nav-opener" onclick="toggleSidebar()">
+    <i class="navopenicon fa fa-times" aria-hidden="true"></i>
+</div>
 <nav class="nav">
-    
-    <ul class="nav-inners" style="overflow:visible;">
-        
-        <img class="my-logo" src="TAS-LOGO.png">
-        <div class="section-div">
-            <a href="/" class="nav-link home"><li class="link-content">Home</li></a>
-            <a href="allocations" class="nav-link allocation"><li class="link-content">Allocations</li></a>
-            <a href="academics" class="nav-link academic"><li class="link-content">Academics</li></a>
-            <a href="Units" class="nav-link unit"><li class="link-content">Units</li></a>
-        </div>
-
-        <div class="section-div">
-        <a href="spreadsheetView" class="nav-link spreadsheet"><li class="link-content">Spreadsheet</li></a>
-        <a href="import" class="nav-link repeat"><li class="link-content">Import / Export</li></a>
-        </div>
-
-        <div class="section-div">
-        <a href="Help" class="nav-link help"><li class="link-content">Help</li></a>
-        <a href="/auth/signout" class="nav-link logout"><li class="link-content">Logout</li></a>
-        </div>
-    </ul>
+	<ul class="nav-inners" style="overflow:visible;">
+		<img class="my-logo" src="TAS-LOGO.png">
+		<div class="section-div">
+				<a href="/" class="nav-link home"><li class="link-content">Home</li></a>
+				<a href="dashboard" class="nav-link dashboard"><li class="link-content">Dashboard</li></a>
+				<a href="allocations" class="nav-link allocation"><li class="link-content">Allocations</li></a>
+				<a href="academics" class="nav-link academic"><li class="link-content">Academics</li></a>
+				<a href="Units" class="nav-link unit"><li class="link-content">Units</li></a>
+		</div>
+		<div class="section-div">
+			<a href="spreadsheetView" class="nav-link spreadsheet"><li class="link-content">Spreadsheet</li></a>
+			<a href="import" class="nav-link repeat"><li class="link-content">Import / Export</li></a>
+		</div>
+		<div class="section-div">
+			<a href="Help" class="nav-link help"><li class="link-content">Help</li></a>
+			<a href="/auth/signout" class="nav-link logout"><li class="link-content">Logout</li></a>
+		</div>
+	</ul>
 </nav>
 
-
 <script>
-    x = document.querySelector(".nav");
-    y = document.querySelector(".nav-inners");
-    z = document.querySelector(".nav-opener");
-    a = document.querySelector(".navopenicon");
+	x = document.querySelector(".nav");
+	y = document.querySelector(".nav-inners");
+	z = document.querySelector(".nav-opener");
+	a = document.querySelector(".navopenicon");
 
-    function toggleSidebar() {
-        y.classList.toggle("display-none");
-        x.classList.toggle("nav-closed");
-        a.classList.toggle("fa-times");
-        a.classList.toggle("fa-chevron-right");        
-    }
+	function toggleSidebar() {
+			y.classList.toggle("display-none");
+			x.classList.toggle("nav-closed");
+			a.classList.toggle("fa-times");
+			a.classList.toggle("fa-chevron-right");        
+	}
 </script>

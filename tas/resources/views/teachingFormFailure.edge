@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  @!component('components.head', title="Teaching Allocation Preferences")
+  <body>
+    <div class="content-section">
+      <div class="home-background flex-container flex-center img-cover">
+        <div class="login-card white-transparent-fill">
+          <form method="GET" action="/preference_form" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            {{ csrfField() }}
+            <h1 class="title">Failed to save your preferences!</h1>
+            <p style="font-size: 20px; margin-bottom: 20px;">
+              Name or ID you entered might be wrong or your record might not exist in the database.
+            </p>
+            <button type="submit" class="dd-button--round button-blue-fill">Back To the Preference Form</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

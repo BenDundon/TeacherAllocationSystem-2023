@@ -1,8 +1,7 @@
-const { hooks } = require('@adonisjs/ignitor')
-
+const { hooks } = require('@adonisjs/ignitor');
 
 hooks.after.providersBooted(() => {
-  const Exception = use('Exception')
+  const Exception = use('Exception');
 
   // Exception.handle('GenericException', async (error, { response, session }) => {
   //   session.withErrors(error.messages).flashAll()
@@ -10,5 +9,4 @@ hooks.after.providersBooted(() => {
   //   console.log(error)
   //   return response.redirect('/home')
   // })
-
-})
+});

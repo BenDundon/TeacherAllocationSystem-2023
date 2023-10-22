@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  @!component('components.head', title="Dashboard")
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <body>
+    <div class="wrapper">
+      @include('partials/sidebar')
+        <div class="container text-center" style="width:100%">
+          <div class="row">
+            <div class="col-4">
+              <p id="allocationFulfillment" style="display: none;">{{allocationFulfillment}}</p>
+              <p id="allocationChartType" style="display: none;">{{allocationChartType}}</p>
+              <canvas id="allocationFulfillmentBarChart"></canvas>
+            </div>
+            <div class="col">
+              <p id="topAndBottom5Allocations" style="display: none;">{{topAndBottom5Allocations}}</p>
+              <canvas id="topAndBottom5AllocationsBarChart"></canvas>
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-7">
+              <p id="willingnessAndExpertise" style="display: none;">{{willingnessAndExpertise}}</p>
+              <canvas id="willingnessAndExpertiseBarChart"></canvas>
+            </div>
+            <div class="col">
+              <div style="font-size:150%; margin-bottom:7%;">Largest 4 Cohort Changes </div>
+              <div class="row" >
+                <div class="col card cohortgrid" >
+                  <div class="row">
+                    <div class="col-4">
+                      <img class="image" src="increase.png">
+                    </div>
+                    <div class="col percent">+{{cohortdiffence[0].percentage}}%</div>
+                  </div>
+                  <div class="row">
+                    <div class="col unitcode"><b>{{cohortdiffence[0].unitCode}}</b></div>
+                    <div class="col co">{{cohortdiffence[0].cohort}} New Students</div>
+                  </div>  
+                </div>
+                <div class="col card cohortgrid" >
+                  <div class="row">
+                    <div class="col-4">
+                      <img class="image" src="decrease.png">
+                    </div>
+                    <div class="col percent" style="color:red;">{{cohortdiffence[3].percentage}}%</div>
+                  </div>
+                  <div class="row">
+                    <div class="col unitcode"><b>{{cohortdiffence[3].unitCode}}</b></div>
+                    <div class="col co">{{cohortdiffence[3].cohort}} New Students</div>
+                  </div>  
+                </div>
+              </div>
+              <div class="row">
+                <div class="col card cohortgrid" >
+                  <div class="row">
+                    <div class="col-4">
+                      <img class="image" src="increase.png">
+                    </div>
+                    <div class="col percent">+{{cohortdiffence[1].percentage}}%</div>
+                  </div>
+                  <div class="row">
+                    <div class="col unitcode"><b>{{cohortdiffence[1].unitCode}}</b></div>
+                    <div class="col co">{{cohortdiffence[1].cohort}} New Students</div>
+                  </div>  
+                </div>
+                <div class="col card cohortgrid" >
+                  <div class="row">
+                    <div class="col-4">
+                      <img class="image" src="decrease.png">
+                    </div>
+                    <div class="col percent" style="color:red;">{{cohortdiffence[2].percentage}}%</div>
+                  </div>
+                  <div class="row">
+                    <div class="col unitcode"><b>{{cohortdiffence[2].unitCode}}</b></div>
+                    <div class="col co">{{cohortdiffence[2].cohort}} New Students</div>
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+{{-- Load the Chart.js library from the CDN --}}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{{-- Import the chart components into the document to render the canvases --}}
+@!component('components/allocationFulfillmentChart')
+@!component('components/topAndBottom5Chart')
+@!component('components/willingnessAndExpertiseChart')
+

@@ -61,7 +61,7 @@
           </div>
           <form action="allocations/deleteallocation" method="POST" style="display:inline;">
             {{csrf}}
-            <input type="hidden" name="id" value="{{allocation.id}}"></input>
+            <input type="hidden" name="academicId" value="{{allocation.academicId}}"></input>
             <input type="submit"   value = "Delete" class="dd-button--hyperlink margin-0"></input>
           </form>
         </td>

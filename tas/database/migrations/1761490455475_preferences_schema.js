@@ -1,24 +1,26 @@
-'use strict'
+'use strict';
 
 /** @type {import('@adonisjs/lucid/src/Schema')} */
-const Schema = use('Schema')
+const Schema = use('Schema');
 
 class PreferencesSchema extends Schema {
-  up () {
+  up() {
     this.create('preferences', (table) => {
       table.string('id').references('id').inTable("academics")
       table.string('code').references('code').inTable("units")
+      table.string('preferredSemester')
       table.integer('desireToTeach')
       table.integer('abilityToTeach')
+      table.integer('yearsOfPriorWork')
+      table.float('score').defaultTo(0);
       table.timestamps()
-      //todo:these combination unique constraints aren't implemented correctly
-      table.unique(['id', 'code'])
-    })
+      table.unique(['id', 'code', 'preferredSemester']);
+    });
   }
 
-  down () {
-    this.drop('preferences')
+  down() {
+    this.drop('preferences');
   }
 }
 
-module.exports = PreferencesSchema
+module.exports = PreferencesSchema;

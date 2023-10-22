@@ -4,46 +4,57 @@
 
 <div id="addPreference" class="modal">
   <div class="modal-background flex-container flex-center">
-      <div class="modal-card pop-up">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Add Academic Preference</p>
-          <button class="delete" aria-label="close" data-dismiss="modal"></button>
-        </header>
-        <section class="modal-card-body">
-        <form method="POST" action="academics/addpreference">
-            {{csrf}}
-            <input type="hidden" name="id" value="{{academic.id}}">
-            <div class="field">
-                <label class="label">Unit Preference</label>
-              <div class="control">
-                <div class="select">
-                  <select name="code" style="width: 100vw !important">
-                    @each(unit in units)
+    <div class="modal-card pop-up">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Add Academic Preference</p>
+        <button class="delete" aria-label="close" data-dismiss="modal"></button>
+      </header>
+      <section class="modal-card-body">
+        <form method="POST" action="{{route2}}">
+          {{csrf}}
+          <input type="hidden" name="id" value="{{academic.id}}">
+          <div class="field">
+            <label class="label">Unit Preference</label>
+            <div class="control">
+              <div class="select">
+                <select name="code" style="width: 100vw !important" required>
+                  @each(unit in units)
                     <option value="{{ unit.code }}">{{ unit.code }} | {{ unit.name }}</option>
-                    @endeach
-                  </select>
-                </div>
+                  @endeach
+                </select>
               </div>
             </div>
+          </div>
+          <div class="field">
+            <label class="label">Preferred Semester</label>
+            <div class="control">
+              <input class="input" type="text" name="preferredSemester" pattern="[0-9]{4}/[1-2]" required>
+            </div>
+          </div>
           <div class="field">
             <label class="label">Desire To Teach</label>
             <div class="control">
-              <input class="input" type="number" min="0" max="10" name="desireToTeach">
+              <input class="input" type="number" min="0" max="10" name="desireToTeach" required>
             </div>
           </div>
           <div class="field">
             <label class="label">Ability To Teach</label>
             <div class="control">
-              <input class="input" type="number" min="0" max="10" name="abilityToTeach">
+              <input class="input" type="number" min="0" max="10" name="abilityToTeach" required>
             </div>
           </div>
-
-            </section>
-            <footer class="modal-card-foot">
-                <input type="submit" value="Add Preference" class="dd-button--round button-blue-fill margin-8">
-                <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>
-                </form>
-            </footer>
+          <div class="field">
+            <label class="label">Years Of Prior Work (Optional)</label>
+            <div class="control">
+              <input class="input" type="number" name="yearsOfPriorWork">
+            </div>
+          </div> 
+          <footer class="modal-card-foot">
+            <input type="submit" value="Add Preference" class="dd-button--round button-blue-fill margin-8">
+            <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>
+          </footer>
+        </form>
+      </section>
     </div>
-</div>
+  </div>
 </div>

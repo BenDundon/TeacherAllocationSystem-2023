@@ -4,56 +4,66 @@
 <button type="button" class="dd-button--hyperlink" data-toggle="modal" data-target="#{{preference.id+preference.code}}">Edit</button>
 
 <div id="{{preference.id+preference.code}}" class="modal">
-    <div class="modal-background flex-container flex-center" >
-        <div class="modal-card">
-
-            <header class="modal-card-head">
-                <p class="modal-card-title">Edit Preference Details</p>
-                <button class="delete" aria-label="close" data-dismiss="modal"></button>
-            </header>
-
-            <section class="modal-card-body">
-            <form method="POST" action="{{ route('AcademicController.updatepreference') }}">
-                {{csrf}}
-              <input type="hidden" name="originalCode" value="{{preference.code}}">
-
-              <div class="field">
-                <label class="label">Academic ID</label>
-                <div class="control">
-                  <input class="input" type="text" name="id" value="{{preference.id}}"readonly>
-                </div>
+  <div class="modal-background flex-container flex-center" >
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Edit Preference Details</p>
+        <button class="delete" aria-label="close" data-dismiss="modal"></button>
+      </header>
+      <section class="modal-card-body">
+        <form method="POST" action="{{route3}}">
+          {{csrf}}
+          <input type="hidden" name="originalCode" value="{{preference.code}}">
+          <input type="hidden" name="originalPreferredSemester" value="{{preference.preferredSemester}}">
+          <div class="field">
+            <label class="label">Academic ID</label>
+            <div class="control">
+              <input class="input" type="text" name="id" value="{{preference.id}}"readonly>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Preferred Unit</label>
+            <div class="control">
+              <div class="select">
+                <select name="code" style="width: 100vw !important">
+                  <option value="{{preference.code}}" disabled selected >{{preference.code}}</option>
+                  @each(unit in units)
+                    <option value="{{unit.code}}">{{unit.code}} | {{unit.name}}</option>
+                  @endeach
+                </select>
               </div>
-              <div class="field">
-                <label class="label">Unit Code</label>
-                <div class="control">
-                  <div class="select">
-                    <select name="code" style="width: 100vw !important">
-                      <option value="{{preference.code}}" disabled selected >{{preference.code}}</option>
-                      @each(unit in units)
-                      <option value="{{ unit.code }}">{{unit.code }} | {{ unit.name }}</option>
-                      @endeach
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="field">
-                <label class="label">Desire To Teach</label>
-                <div class="control">
-                  <input class="input" type="number" min="0" step="1" max ="10" name="desireToTeach" value="{{ preference.desireToTeach }}">
-                </div>
-              </div>
-              <div class="field">
-                <label class="label">Ability To Teach</label>
-                <div class="control">
-                  <input class="input" type="number" min="0" step="1" max ="10" name="abilityToTeach" value="{{ preference.abilityToTeach }}">
-                </div>
-              </div>
-                </section>
-                <footer class="modal-card-foot">
-                    <input type="submit" value="Update Preference" class="dd-button--round button-blue-fill margin-8">
-                    <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>
-                </footer>
-            </form>
-        </div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Preferred Semester</label>
+            <div class="control">
+              <input class="input" type="text" name="preferredSemester" pattern="[0-9]{4}/[1-2]" value="{{preference.preferredSemester}}">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Desire To Teach</label>
+            <div class="control">
+              <input class="input" type="number" min="0" step="1" max ="10" name="desireToTeach" value="{{preference.desireToTeach}}">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Ability To Teach</label>
+            <div class="control">
+              <input class="input" type="number" min="0" step="1" max ="10" name="abilityToTeach" value="{{preference.abilityToTeach}}">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Years Of Prior Work</label>
+            <div class="control">
+              <input class="input" type="number" name="yearsOfPriorWork" value="{{preference.yearsOfPriorWork}}">
+            </div>
+          </div>  
+          <footer class="modal-card-foot">
+            <input type="submit" value="Update Preference" class="dd-button--round button-blue-fill margin-8">
+            <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>
+          </footer>
+        </form>
+      </section>
     </div>
+  </div>
 </div>

@@ -1,25 +1,27 @@
 <div class="searchbar-wrapper">
-  <form method="GET" action="{{ route }}">
-    {{csrf}}
-
-    <div class="flex-container data-tool-container">
-      <div class="data-row data-tool-row-1 flex-container">
-        <h1 class="title">Allocations</h1>
-      </div>
-      <div class="data-row data-tool-row-2 flex-container">
-        <div>
+  <div class="flex-container data-tool-container">
+    <div class="data-row data-tool-row-1 flex-container">
+      <h1 class="title">Allocations</h1>
+      <form action="{{route2}}" method="POST" style="margin-left: auto;">
+        {{csrf}}
+        <input type="submit" value="Auto Allocation" class="dd-button--round button-blue-fill">
+      </form>
+    </div>
+    <form method="GET" action="{{ route }}">
+      {{csrf}}
+    <div class="data-row data-tool-row-2 flex-container">
+      <div>
           <div class="field has-addons">
             <p class="control">
               <div class="">
                 <div class="searchbar-button-container">
-                  <button class="searchbar-button" type="submit">
+                  <button class="searchbar-button" type="submit" href="route">
                     <i class="fa fa-search" aria-hidden="true"></i>
                   </button>
                 </div>
                 <input class="search-input" style="height:40px; width:270px" type="text" name="searchbar" placeholder="{{title}}"></input>
               </div>
             </p>
-
             <div>
               <select class="sort-filter-input" style="height:40px" name="sortOption">
                 <option value="" disabled="" selected="">Sort by...</option>
@@ -29,7 +31,6 @@
                 <option value="totalFrac">Lowest total fraction</option>
               </select>
             </div>
-
             <p class="has-addons">
               <button class="searchbar-clear-button" href="allocations">
                 <i class="fa fa-undo" aria-hidden="true"></i>Reset
@@ -39,85 +40,96 @@
         </div>
         <div>
           <button type="button" class="dd-button--round button-blue-fill" data-toggle="modal" data-target="#AllocationForm">+ Add Allocation</button>
-
         </div>
       </div>
-
-
       <div class="data-row data-tool-row-3 flex-container" style="justify-content: space-between;">
-
         <div class="flex-container" style="flex-direction:row; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
-
           <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
             <p>
               <b>Subject Area Group</b>
             </p>
             <div class="display:flex;" style="height:70px; overflow-y: scroll;">
               @each(group in subjectAreaGroups)
-              <div class="input-group-prepend">
-                <input class="sort-filter-input" type="checkbox" checked="" name="{{ group }}">{{ group }}</input>
+              {{--  Check if at least 1 checkbox is ticked and certain checkboxes are included in tickedCheckBoxes1  --}}
+                
+                @if(tickedCheckBoxes1.length > 0 && tickedCheckBoxes1.includes(group))
+                <div class="input-group-prepend">
+                  <input class="sort-filter-input" type="checkbox" name="{{ group }}" checked>{{ group }}</input>
+                </div>
+                @else
+                <div class="input-group-prepend">
+                  <input class="sort-filter-input" type="checkbox" name="{{ group }}">{{ group }}</input>
+                </div>
+                @endif
+                @endeach
               </div>
-              @endeach
             </div>
-          </div>
+            <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+              <p>
+                <b>Semester</b>
+              </p>
+              <div class="display:flex;" style="height:70px; overflow-y: scroll;">
+                @each(sem in semesters)
+                {{--  Check if at least 1 checkbox is ticked and certain checkboxes are included in tickedCheckBoxes2  --}}
 
-          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
-            <p>
-              <b>Semester</b>
-            </p>
-            <div class="display:flex;" style="height:70px; overflow-y: scroll;">
-              @each(sem in semesters)
-              <div class="input-group-prepend">
-                <input class="sort-filter-input" type="checkbox" checked="" name="{{ sem }}">{{ sem }}</input>
+                  
+                  @if(tickedCheckBoxes2.length > 0 && tickedCheckBoxes2.includes(sem))
+                  <div class="input-group-prepend">
+                    <input class="sort-filter-input" type="checkbox" name="{{ sem }}" checked>{{ sem }}</input>
+                  </div>
+                  @else
+                  <div class="input-group-prepend">
+                    <input class="sort-filter-input" type="checkbox" name="{{ sem }}">{{ sem }}</input>
+                  </div>
+                  @endif
+                  @endeach
+                </div>
               </div>
-              @endeach
+              <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+                <p>
+                  <b>Estimated Enrolments</b>
+                </p>
+                <div style="display:flex;">
+                  <input class="sort-filter-input min-max-input" style="width:80px" type="number" min="0" max="99999" name="minEnrols" placeholder="Min" value="{{ minEnrols }}" />
+                  <input class="sort-filter-input min-max-input" style="width:80px" type="number" min="0" max="99999" name="maxEnrols" placeholder="Max" value="{{ maxEnrols }}" />
+                </div>
+              </div>
+              <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+                <p>
+                  <b>School Share</b>
+                </p>
+                <div style="display:flex;">
+                  <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="99" step="0.01" name="minShare" placeholder="Min" value="{{ minShare }}"/>
+                  <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="99" step="0.01" name="maxShare" placeholder="Max" value="{{ maxShare }}"/>
+                </div>
+              </div>
+              <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+                <p>
+                  <b>Total Allocated Fraction</b>
+                </p>
+                <div style="display:flex;">
+                  <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="999" step="0.01" name="minTotal" placeholder="Min" value="{{ minTotal }}"/>
+                  <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="999" step="0.01" name="maxTotal" placeholder="Max" value="{{ maxTotal }}"/>
+                </div>
+              </div>
+              <div>
+                <button class="dd-button--round button-blue-fill" type="submit" href="{{route}}">Apply</button>
+              </div>
             </div>
           </div>
-
-          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
-            <p>
-              <b>Estimated Enrolments</b>
-            </p>
-            <div style="display:flex;">
-              <input class="sort-filter-input min-max-input" style="width:80px" type="number" min="0" max="99999" name="minEnrols" placeholder="Min"></input>
-              <input class="sort-filter-input min-max-input" style="width:80px" type="number" min="0" max="99999" name="maxEnrols" placeholder="Max"></input>
-            </div>
-          </div>
-
-          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
-            <p>
-              <b>School Share</b>
-            </p>
-            <div style="display:flex;">
-              <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="99" step="0.01" name="minShare" placeholder="Min"></input>
-              <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="99" step="0.01" name="maxShare" placeholder="Max"></input>
-            </div>
-          </div>
-
-          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
-            <p>
-              <b>Total Allocated Fraction</b>
-            </p>
-            <div style="display:flex;">
-              <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="999" step="0.01" name="minTotal" placeholder="Min"></input>
-              <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="999" step="0.01" name="maxTotal" placeholder="Max"></input>
-            </div>
-          </div>
-
-          
+          <br/>
+          Returned {{offerings.length}} allocations
         </div>
-      </div>
-
-    </div>
-  </form>
-
+      </form>
+      
+  
   {{--
-  <div class="dashboard-col">
-    <div class="dashboard-card">
-      <h2 class="dashboard-title">Sort</h2>
-      <select class="searchbar-select" name="sort">
-        <option value="" disabled="" selected="">Sort by...</option>
-        <option value="academic.name">Academic Name</option>
+    <div class="dashboard-col">
+      <div class="dashboard-card">
+        <h2 class="dashboard-title">Sort</h2>
+        <select class="searchbar-select" name="sort">
+          <option value="" disabled="" selected="">Sort by...</option>
+          <option value="academic.name">Academic Name</option>
         <option value="semester">Semester</option>
         <option value="">Requested Load</option>
         <option value="">Actual Load</option>

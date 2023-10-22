@@ -1,8 +1,8 @@
-"use strict";
-const Exception = use("App/Exceptions/Handler");
-const User = use("App/Models/User");
-const Logger = use("Logger");
-const validator = require("validator");
+'use strict';
+const Exception = use('App/Exceptions/Handler');
+const User = use('App/Models/User');
+const Logger = use('Logger');
+const validator = require('validator');
 
 class UserController {
   /*
@@ -20,58 +20,60 @@ class UserController {
 
     // Check if the creds meet our requirements, if they don't throw an error
     try {
-      if (!validator.isEmail(request.input("email"))) {
-        throw "InvalidEmail";
+      if (!validator.isEmail(request.input('email'))) {
+        throw 'InvalidEmail';
       }
       if (
-        !validator.isStrongPassword(request.input("password"), password_options)
+        !validator.isStrongPassword(request.input('password'), password_options)
       ) {
-        throw "InvalidPassword";
+        throw 'InvalidPassword';
       }
-      if (await User.findBy("email", request.input("email"))) {
-        throw "EmailExists";
+      if (await User.findBy('email', request.input('email'))) {
+        throw 'EmailExists';
       }
-      if (request.input("password") != request.input("confirmPassword")) {
-        throw "PasswordDoesNotMatch";
+      if (request.input('password') != request.input('confirmPassword')) {
+        throw 'PasswordDoesNotMatch';
       }
     } catch (error) {
-      if (error == "InvalidPassword") {
-        const message ="Password needs to be at least 8 characters and contain one lowercase, uppercase, number and symbol.";
+      if (error == 'InvalidPassword') {
+        const message =
+          'Password needs to be at least 8 characters and contain one lowercase, uppercase, number and symbol.';
         session.withErrors(message).flash({ InvalidPassword: message });
-        console.log("InvalidPassword");
-      } else if (error == "InvalidEmail") {
-        const message = "Please use a valid email address.";
+        console.log('InvalidPassword');
+      } else if (error == 'InvalidEmail') {
+        const message = 'Please use a valid email address.';
         session.withErrors(message).flash({ InvalidEmail: message });
-        console.log("InvalidEmail");
-      } else if (error == "EmailExists") {
-        const message ="Account with this email already exists, please sign in.";
+        console.log('InvalidEmail');
+      } else if (error == 'EmailExists') {
+        const message =
+          'Account with this email already exists, please sign in.';
         session.withErrors(message).flash({ EmailExists: message });
-        console.log("EmailExists");
-      } else if (error == "PasswordDoesNotMatch") {
-        const message = "Passwords do not match.";
+        console.log('EmailExists');
+      } else if (error == 'PasswordDoesNotMatch') {
+        const message = 'Passwords do not match.';
         session.withErrors(message).flash({ PasswordDoesNotMatch: message });
-        console.log("PasswordDoesNotMatch");
+        console.log('PasswordDoesNotMatch');
       }
       //generic error page for exceptions not handled by above
       else {
         Logger.error(error);
         throw new Exception();
       }
-      return response.redirect("back");
+      return response.redirect('back');
     }
 
     // If all the above have passed then lets create the user and return their token
     try {
-      const userData = request.only(["username", "email", "password"]);
+      const userData = request.only(['username', 'email', 'password']);
       const newUser = await User.create(userData);
       await auth.login(newUser);
-      return response.redirect("/", true);
+      return response.redirect('/', true);
     } catch (error) {
       Logger.error(error);
       return response.status(400).json({
-        status: "error",
+        status: 'error',
         message:
-          "There was a problem creating the user, please try again later.",
+          'There was a problem creating the user, please try again later.',
       });
     }
   }
@@ -79,13 +81,18 @@ class UserController {
   /*
     Logs in a user and returns a session token
   */
-  async login({ request, auth, response }) {
+  async login({ request, auth, response, session }) {
     try {
-      await auth.attempt(request.input("email"), request.input("password"));
-      return response.route("/", true);
+      await auth.attempt(request.input('email'), request.input('password'));
+      return response.route('/', true);
     } catch (error) {
+      console.log(error);
+      const message = 'Invalid username or password!';
+      console.log(message);
+      session.withErrors(message).flash({ IncorrectDetails: message });
+      console.log('InvalidPassword');
       Logger.error(error);
-      return response.route("/login_error", true);
+      return response.redirect('back');
     }
   }
 
@@ -95,10 +102,10 @@ class UserController {
   async signout({ auth, response }) {
     try {
       await auth.logout();
-      return response.route("/", true);
+      return response.route('/', true);
     } catch (error) {
       Logger.error(error);
-      response.send("Error Logging Out");
+      response.send('Error Logging Out');
     }
   }
 }

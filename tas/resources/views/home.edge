@@ -62,11 +62,17 @@
           <div class="input-group">
             <input class="text-input" type="password" name="password" placeholder="Password">
           </div>
+          @if(flashMessage('IncorrectDetails'))
+          <section class="notification is-danger is-small is-light small-font-size">
+            {{ flashMessage('IncorrectDetails')}}
+          </section>
+          @endif
           <div class="input-group">
             <input class="dd-button--round button-blue-fill full-width" type="submit" value="Submit">
           </div>
           </form>
-        <p class="font-med padding-24">Don't have an account?&nbsp;<a href="signup">Sign up</a></p>
+        <p class="font-med" style="margin: 5px 0px;">Don't have an account?&nbsp;<a href="signup">Sign up</a></p>
+        <p class="font-med" style="margin-bottom: 24px;">If you want to add or update teaching preference, go to <a href="preference_form">Teaching Preference Form</a></p>
       </div>
     </div>
   </div>

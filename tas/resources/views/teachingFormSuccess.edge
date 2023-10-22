@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  @!component('components.head', title="Teaching Allocation Preferences")
+  <body>
+    <div class="content-section">
+      <div class="home-background flex-container flex-center img-cover">
+        <div class="login-card white-transparent-fill">
+          <form method="GET" action="/" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            {{ csrfField() }}
+            <h1 class="title">Your preferences have been saved successfully!</h1>
+            <button type="submit" class="dd-button--round button-blue-fill">Back To Home</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

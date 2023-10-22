@@ -1,0 +1,47 @@
+<script>
+    // Read JSON string data in the div tag where its id is "topAndBottom5AllocationsData"
+    const topAndBottom5Allocations = document.getElementById('topAndBottom5Allocations');
+    const topAndBottom5AllocationsJson = JSON.parse(topAndBottom5Allocations.innerText);
+  
+    // Store each data into labels and data arrays
+    const topAndBottom5AllocationsLabels = [];
+    const topAndBottom5AllocationsData = [];
+    for (let key in topAndBottom5AllocationsJson) {
+      const label = topAndBottom5AllocationsJson[key].unitCode + " " + topAndBottom5AllocationsJson[key].semester;
+      topAndBottom5AllocationsLabels.push(label);
+      topAndBottom5AllocationsData.push(
+        topAndBottom5AllocationsJson[key].totalAllocatedFraction
+      );
+    }
+    // Plot the bar chart to display Top and Bottom 5 Allocations
+    const topAndBottom5AllocationsBarChart = document.getElementById('topAndBottom5AllocationsBarChart');
+    new Chart(topAndBottom5AllocationsBarChart, {
+      type: 'bar',
+      data: {
+        labels: topAndBottom5AllocationsLabels,
+        datasets: [{
+          label: 'Total Allocated Fraction',
+          data: topAndBottom5AllocationsData,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        elements: {
+          bar: {
+            borderWidth: 2,
+          }
+        },
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+          },
+          title: {
+            display: true,
+            text: 'Top and Bottom 5 Allocations'
+          }
+        }
+      },
+    });
+  </script>

@@ -1,0 +1,38 @@
+<script>
+    // Retrieve the data passed by DashboardController, and split it back into an array
+    const allocationFulfillment = document.getElementById('allocationFulfillment').innerText.split(",") ;
+    const allocationChartType = document.getElementById('allocationChartType').innerText;
+    // Plot the bar chart to display the fulfillment of each allocation
+    const fulfillmentLabels = ['underallocated', 'well-allocated', 'overallocated']
+    console.log(allocationFulfillment);
+    console.log(allocationChartType);
+    const allocationFulfillmentBarChart = document.getElementById('allocationFulfillmentBarChart');
+    new Chart(allocationFulfillmentBarChart, {
+      type: allocationChartType,
+      data: {
+        labels: fulfillmentLabels,
+        datasets: [{
+          data: allocationFulfillment,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        elements: {
+          bar: {
+            borderWidth: 2,
+          }
+        },
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false,
+            position: 'right',
+          },
+          title: {
+            display: true,
+            text: 'Allocation Summary'
+          }
+        }
+      },
+    });
+  </script>

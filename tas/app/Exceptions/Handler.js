@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 
-const BaseExceptionHandler = use('BaseExceptionHandler')
-const Logger = use('Logger')
+const BaseExceptionHandler = use('BaseExceptionHandler');
+const Logger = use('Logger');
 
 /**
  * This class handles all exceptions thrown during
@@ -21,7 +21,7 @@ class ExceptionHandler extends BaseExceptionHandler {
    *
    * @return {void}
    */
-  async handle (error, { request, response }) {
+  async handle(error, { request, response }) {
     // response.status(400).redirect('/error')
   }
 
@@ -35,8 +35,7 @@ class ExceptionHandler extends BaseExceptionHandler {
    *
    * @return {void}
    */
-  async report (error, { request }) {
-  }
+  async report(error, { request }) {}
 }
 
-module.exports = ExceptionHandler
+module.exports = ExceptionHandler;

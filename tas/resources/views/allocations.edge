@@ -8,30 +8,57 @@
       @include('partials/sidebar')
       <div class="content-section">
       <section class="main-content">
+      
         {{--  Warning Message for Unallocated units  --}}
-
         <div>
           @if(offerings.length < 0)
             @!component('components.unallocatedwarning')
           @endif
         </div>
-        {{--  Title, Search Bar--}}
 
+        {{--  Display a Modal for Add Allocation  --}}
+        @!component('components.addallocation', {
+          csrf: csrfField(),
+          academics: academics,
+          units: units,
+          allocations: allocations,
+          offerings: offerings,
+          aggAllocations: aggAllocations
+        })
+        {{--  Display filtering options  --}}
+        @!component('components.searchAllocations', {
+          title: "Find allocation (unit code)...",
+          csrf: csrfField(),
+          route: route('AllocationController.render'),
+          route2: route('AllocationController.scoreAllocation'),
+          academics: academics,
+          units: units,
+          allocations: allocations,
+          offerings: offerings,
+          aggAllocations: aggAllocations,
+          subjectAreaGroups: subjectAreaGroups,
+          tickedCheckBoxes1: tickedCheckBoxes1,
+          semesters: semesters,
+          tickedCheckBoxes2: tickedCheckBoxes2,
+          minEnrols: minEnrols,
+          maxEnrols: maxEnrols,
+          minShare: minShare,
+          maxShare: maxShare,
+          minTotal: minTotal,
+          maxTotal: maxTotal
+        })
 
-        @!component('components.addallocation', csrf=csrfField(), academics=academics, units=units, allocations=allocations, offerings=offerings, aggAllocations=aggAllocations, aggTotalFractions=aggTotalFractions)
-
-
-
-        @!component('components.searchAllocations', title="Find allocation (unit code)...", csrf=csrfField(), route=route('AllocationController.render'), subjectAreaGroups=subjectAreaGroups, semesters=semesters, academics=academics, units=units, allocations=allocations, offerings=offerings, aggAllocations=aggAllocations, aggTotalFractions=aggTotalFractions)
-
-        <div>
-
-          {{-- Display Allocations --}}
-          @!component('components.displayallocations', csrf=csrfField(), academics=academics, units=units, allocations=allocations, offerings=offerings, aggAllocations=aggAllocations, aggTotalFractions=aggTotalFractions)
-        </div>
+        {{-- Display Allocations --}}
+        @!component('components.displayallocations', {
+          csrf: csrfField(),
+          academics: academics,
+          units: units,
+          allocations: allocations,
+          offerings: offerings,
+          aggAllocations: aggAllocations
+        })
       </section>
     </div>
     </div>
   </body>
-
 </html>

@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html>
   @!component('components.head', title="Teacher Allocation System")
-
   <body>
     <div class="wrapper">
       @include('partials/sidebar')
-    <div class="content-section">
-    <div class="main-content">
-
-      @!component('components.spreadsheet', title="Current Spreadsheet state", global_spread=global_spread, academics=academics, units=units, allocations=allocations, offerings=offerings, preferences=preferences, csrf=csrfField(), route=route('SpreadSheetView.render') )
-
-
+      <div class="content-section">
+        <div class="main-content">
+          <div class="spreadsheet-container">
+            @!component('components.spreadsheet', {
+              title: "Current Spreadsheet state",
+              csrf: csrfField(),
+              route1: route('SpreadsheetViewController.render'),
+              route2: route('SpreadsheetViewController.updateTable'),
+              academics: academics,
+              units: units,
+              allocations: allocations,
+              offerings: offerings,
+              preferences: preferences,
+              globalTable: globalTable,
+              selectedTab: selectedTab,
+              selectedTableName: selectedTableName,
+            })
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-</body>
-
+  </body>
 </html>

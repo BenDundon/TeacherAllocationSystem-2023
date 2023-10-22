@@ -1,0 +1,45 @@
+<script>
+    // Read JSON string data in the div tag where its id is "willingnessAndExpertiseData"
+    const willingnessAndExpertise = document.getElementById('willingnessAndExpertise');
+    const willingnessAndExpertiseJson = JSON.parse(willingnessAndExpertise.innerText);
+  
+    // Store each data into labels and data arrays
+    const willingnessAndExpertiseLabels = willingnessAndExpertiseJson.codes;
+
+    // Plot the bar chart to display Top and Bottom 5 Allocations
+    const willingnessAndExpertiseBarChart = document.getElementById('willingnessAndExpertiseBarChart');
+    new Chart(willingnessAndExpertiseBarChart, {
+      type: 'bar',
+      data: {
+        labels: willingnessAndExpertiseLabels,
+        datasets: [{
+          label: 'Average Willingness',
+          data: willingnessAndExpertiseJson.willingness,
+          borderWidth: 1
+        },
+        {
+            label: "Average Expertise",
+            data: willingnessAndExpertiseJson.experience,
+            borderWidth: 1
+        }]
+      },
+      options: {
+        indexAxis: 'x',
+        elements: {
+          bar: {
+            borderWidth: 2,
+          }
+        },
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'right',
+          },
+          title: {
+            display: true,
+            text: 'Average willingness and expertise by unit'
+          }
+        }
+      },
+    });
+  </script>
