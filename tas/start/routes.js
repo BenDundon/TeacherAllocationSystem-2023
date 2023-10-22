@@ -43,6 +43,12 @@ Route.post(
   'AllocationController.deleteallocation',
 ).middleware(['auth']);
 
+Route.post(
+  '/allocations/scoreallocation', 
+  'AllocationController.scoreAllocation'
+).middleware(['auth']);
+
+
 //academics
 Route.get('/academics', 'AcademicController.render').middleware(['auth']);
 Route.post('/academics', 'AcademicController.render').middleware(['auth']);

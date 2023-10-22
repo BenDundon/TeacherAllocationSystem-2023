@@ -1,12 +1,16 @@
 <div class="searchbar-wrapper">
-  <form method="GET" action="{{ route }}">
-    {{csrf}}
-    <div class="flex-container data-tool-container">
-      <div class="data-row data-tool-row-1 flex-container">
-        <h1 class="title">Allocations</h1>
-      </div>
-      <div class="data-row data-tool-row-2 flex-container">
-        <div>
+  <div class="flex-container data-tool-container">
+    <div class="data-row data-tool-row-1 flex-container">
+      <h1 class="title">Allocations</h1>
+      <form action="{{route2}}" method="POST" style="margin-left: auto;">
+        {{csrf}}
+        <input type="submit" value="Auto Allocation" class="dd-button--round button-blue-fill">
+      </form>
+    </div>
+    <form method="GET" action="{{ route }}">
+      {{csrf}}
+    <div class="data-row data-tool-row-2 flex-container">
+      <div>
           <div class="field has-addons">
             <p class="control">
               <div class="">
@@ -46,82 +50,86 @@
             </p>
             <div class="display:flex;" style="height:70px; overflow-y: scroll;">
               @each(group in subjectAreaGroups)
-                {{--  Check if at least 1 checkbox is ticked and certain checkboxes are included in tickedCheckBoxes1  --}}
+              {{--  Check if at least 1 checkbox is ticked and certain checkboxes are included in tickedCheckBoxes1  --}}
+                
                 @if(tickedCheckBoxes1.length > 0 && tickedCheckBoxes1.includes(group))
-                  <div class="input-group-prepend">
-                    <input class="sort-filter-input" type="checkbox" name="{{ group }}" checked>{{ group }}</input>
-                  </div>
+                <div class="input-group-prepend">
+                  <input class="sort-filter-input" type="checkbox" name="{{ group }}" checked>{{ group }}</input>
+                </div>
                 @else
-                  <div class="input-group-prepend">
-                    <input class="sort-filter-input" type="checkbox" name="{{ group }}">{{ group }}</input>
-                  </div>
+                <div class="input-group-prepend">
+                  <input class="sort-filter-input" type="checkbox" name="{{ group }}">{{ group }}</input>
+                </div>
                 @endif
-              @endeach
+                @endeach
+              </div>
             </div>
-          </div>
-          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
-            <p>
-              <b>Semester</b>
-            </p>
-            <div class="display:flex;" style="height:70px; overflow-y: scroll;">
-              @each(sem in semesters)
-              {{--  Check if at least 1 checkbox is ticked and certain checkboxes are included in tickedCheckBoxes2  --}}
-                @if(tickedCheckBoxes2.length > 0 && tickedCheckBoxes2.includes(sem))
+            <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+              <p>
+                <b>Semester</b>
+              </p>
+              <div class="display:flex;" style="height:70px; overflow-y: scroll;">
+                @each(sem in semesters)
+                {{--  Check if at least 1 checkbox is ticked and certain checkboxes are included in tickedCheckBoxes2  --}}
+
+                  
+                  @if(tickedCheckBoxes2.length > 0 && tickedCheckBoxes2.includes(sem))
                   <div class="input-group-prepend">
                     <input class="sort-filter-input" type="checkbox" name="{{ sem }}" checked>{{ sem }}</input>
                   </div>
-                @else
+                  @else
                   <div class="input-group-prepend">
                     <input class="sort-filter-input" type="checkbox" name="{{ sem }}">{{ sem }}</input>
                   </div>
-                @endif
-              @endeach
+                  @endif
+                  @endeach
+                </div>
+              </div>
+              <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+                <p>
+                  <b>Estimated Enrolments</b>
+                </p>
+                <div style="display:flex;">
+                  <input class="sort-filter-input min-max-input" style="width:80px" type="number" min="0" max="99999" name="minEnrols" placeholder="Min" value="{{ minEnrols }}" />
+                  <input class="sort-filter-input min-max-input" style="width:80px" type="number" min="0" max="99999" name="maxEnrols" placeholder="Max" value="{{ maxEnrols }}" />
+                </div>
+              </div>
+              <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+                <p>
+                  <b>School Share</b>
+                </p>
+                <div style="display:flex;">
+                  <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="99" step="0.01" name="minShare" placeholder="Min" value="{{ minShare }}"/>
+                  <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="99" step="0.01" name="maxShare" placeholder="Max" value="{{ maxShare }}"/>
+                </div>
+              </div>
+              <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+                <p>
+                  <b>Total Allocated Fraction</b>
+                </p>
+                <div style="display:flex;">
+                  <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="999" step="0.01" name="minTotal" placeholder="Min" value="{{ minTotal }}"/>
+                  <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="999" step="0.01" name="maxTotal" placeholder="Max" value="{{ maxTotal }}"/>
+                </div>
+              </div>
+              <div>
+                <button class="dd-button--round button-blue-fill" type="submit" href="{{route}}">Apply</button>
+              </div>
             </div>
           </div>
-          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
-            <p>
-              <b>Estimated Enrolments</b>
-            </p>
-            <div style="display:flex;">
-              <input class="sort-filter-input min-max-input" style="width:80px" type="number" min="0" max="99999" name="minEnrols" placeholder="Min" value="{{ minEnrols }}" />
-              <input class="sort-filter-input min-max-input" style="width:80px" type="number" min="0" max="99999" name="maxEnrols" placeholder="Max" value="{{ maxEnrols }}" />
-            </div>
-          </div>
-          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
-            <p>
-              <b>School Share</b>
-            </p>
-            <div style="display:flex;">
-              <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="99" step="0.01" name="minShare" placeholder="Min" value="{{ minShare }}"/>
-              <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="99" step="0.01" name="maxShare" placeholder="Max" value="{{ maxShare }}"/>
-            </div>
-          </div>
-          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
-            <p>
-              <b>Total Allocated Fraction</b>
-            </p>
-            <div style="display:flex;">
-              <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="999" step="0.01" name="minTotal" placeholder="Min" value="{{ minTotal }}"/>
-              <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="999" step="0.01" name="maxTotal" placeholder="Max" value="{{ maxTotal }}"/>
-            </div>
-          </div>
-          <div>
-            <button class="dd-button--round button-blue-fill" type="submit" href="{{route}}">Apply</button>
-          </div>
-        </div>
-      </div>
-      <br/>
+          <br/>
           Returned {{offerings.length}} allocations
-    </div>
-  </form>
-
+        </div>
+      </form>
+      
+  
   {{--
-  <div class="dashboard-col">
-    <div class="dashboard-card">
-      <h2 class="dashboard-title">Sort</h2>
-      <select class="searchbar-select" name="sort">
-        <option value="" disabled="" selected="">Sort by...</option>
-        <option value="academic.name">Academic Name</option>
+    <div class="dashboard-col">
+      <div class="dashboard-card">
+        <h2 class="dashboard-title">Sort</h2>
+        <select class="searchbar-select" name="sort">
+          <option value="" disabled="" selected="">Sort by...</option>
+          <option value="academic.name">Academic Name</option>
         <option value="semester">Semester</option>
         <option value="">Requested Load</option>
         <option value="">Actual Load</option>

@@ -503,6 +503,19 @@
             </form>
           </div>
         </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+          <p>AllocationScore</p>
+          <form method="GET" action="{{ route1 }}">
+            {{csrf}}
+            <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+              <option value="" disabled="" selected>Sort by...</option>
+              <option value="preferencesAsc7">Ascending Order</option>
+              <option value="preferencesDesc7">Descending Order</option>
+            </select>
+          </form>
+        </div>
+        </th>
       </tr>
       <form id="preferencesTable" method="POST" action="{{ route2 }}">
         {{csrf}}
@@ -530,6 +543,10 @@
             </td>
             <td class="cell">
               <input type="number" name="preferenceYearsOfPriorWork" value="{{preference.yearsOfPriorWork}}" style="width: 100%; border: none;">
+            </td>
+            <td class="cell">
+              <input type="text" name="preferenceScore" value="{{preference.score}}" style="display: none;">
+              {{preference.score}}
             </td>
           </tr>
         @endeach

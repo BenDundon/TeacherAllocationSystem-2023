@@ -131,6 +131,7 @@ class SpreadsheetViewController {
       // Store the values of a selected tab and a name of a table to display at first
       let selectedTab = 'global-tab';
       let selectedTableName = 'Global';
+      
       // Sort a table in ascending order based on a non-numerical column
       const sortAscOrder1 = (table, columnName) => {
         let sortedColumnArray = [];
@@ -508,6 +509,16 @@ class SpreadsheetViewController {
             preferences = sortDescOrder3(preferences, 'yearsOfPriorWork');
             selectedTab = 'preferences-tab';
             selectedTableName = 'Preferences';
+            break;
+          case "preferencesAsc7":
+            preferences = sortAscOrder3(preferences, "score");
+            selectedTab = "preferences-tab";
+            selectedTableName = "Preferences";
+            break;
+          case "preferencesDesc7":
+            preferences = sortDescOrder3(preferences, "score");
+            selectedTab = "preferences-tab";
+            selectedTableName = "Preferences";
             break;
         }
       } else {
