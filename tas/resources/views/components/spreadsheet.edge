@@ -12,6 +12,9 @@
 @if(academics[0])
   <div style="display: flex;">
     <h1 class="title" style="width: 50%; text-align: left;">Spreadsheet View</h1>
+    <p id="save-global" style="margin-left: auto; margin-top: auto; margin-bottom: auto;">
+      *After editing a certain cell, you need to press the "Enter" key in that cell to save the changes in the "Global" table.
+    </p>
 
     {{--  Save Buttons  --}}
     <div style="margin-left: auto;">
@@ -72,8 +75,8 @@
                     <input type="text" name="unitCode" value="{{each.unitCode}}" style="display: none;">
                     <input type="text" name="semester" value="{{each.semester}}" style="display: none;">
                     <div style="display: inline-block;">
-                      <input type="text" name="fractionAllocated" value="{{each.fractionAllocated}}" style="width: 60px; border: none;">
-                      <button id="save-global">Save</button>
+                      <input type="text" name="fractionAllocated" value="{{each.fractionAllocated}}" style="width: 100%; border: none;">
+                      <button id="save-global" style="display: none;">Save</button>
                     </div>
                   @endif
                 @endeach
@@ -570,9 +573,13 @@
   for (i = 0; i < saveButtons.length; i++) {
     saveButtons[i].style.display = "none";
   }
+  document.getElementById("save-global").style.display = "none";
 
   // Show a save button according to the opened tab
   switch("{{selectedTableName}}") {
+    case "Global":
+      document.getElementById("save-global").style.display = "block";
+      break;
     case "Academics":
       document.getElementById("save-academics").style.display = "block";
       break;
@@ -617,23 +624,27 @@
     for (i = 0; i < saveButtons.length; i++) {
       saveButtons[i].style.display = "none";
     }
+    document.getElementById("save-global").style.display = "none";
 
     // Show a save button according to the opened tab
     switch(tabName) {
+      case "Global":
+        document.getElementById("save-global").style.display = "block";
+        break;
       case "Academics":
         document.getElementById("save-academics").style.display = "block";
         break;
       case "Units":
         document.getElementById("save-units").style.display = "block";
         break;
-        case "Allocations":
+      case "Allocations":
         document.getElementById("save-allocations").style.display = "block";
         break;
-        case "UnitOfferings":
-          document.getElementById("save-unitOfferings").style.display = "block";
+      case "UnitOfferings":
+        document.getElementById("save-unitOfferings").style.display = "block";
         break;
-        case "Preferences":
-          document.getElementById("save-preferences").style.display = "block";
+      case "Preferences":
+        document.getElementById("save-preferences").style.display = "block";
         break;
     }
   }
